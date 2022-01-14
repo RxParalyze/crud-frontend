@@ -25,7 +25,7 @@ import com.google.common.base.Preconditions;
 
 @Slf4j
 @RestController
-@RequestMapping("/Users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public User findById(@PathVariable("id") Long id) {
+    public User findById(@PathVariable("id") Integer id) {
         return RestPreconditions.checkFound(service.findById(id));
     }
 
@@ -50,7 +50,7 @@ public class UserController {
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Integer id) {
         service.deleteById(id);
     }
 

@@ -15,14 +15,14 @@ model Post {
   title     String
   content   String?
   published Boolean @default(false)
+  createdAt DateTime  @default(now()) @map(name: "created_at")
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
 
 model User {
   id            Int       @default(autoincrement()) @id
-  firstName     String?
-  lastName      String?
+  name          String?
   userName      String?   @unique
   passWord      String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")

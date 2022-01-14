@@ -34,7 +34,7 @@ public class PostService extends AbstractService<Post> implements IPostService {
     //blog
 
     @Override
-    protected PagingAndSortingRepository<Post, Long> getDao() {
+    protected PagingAndSortingRepository<Post, Integer> getDao() {
         return dao;
     }
 
@@ -47,7 +47,7 @@ public class PostService extends AbstractService<Post> implements IPostService {
     }
 
     @Override
-    public Post findById(long id) {
+    public Post findById(int id) {
         Post findPost = getDao().findById(id).get();
         return findPost;
     }
@@ -70,7 +70,7 @@ public class PostService extends AbstractService<Post> implements IPostService {
     }
 
     @Override
-    public void deleteById(long PostId) {
+    public void deleteById(int PostId) {
         getDao().deleteById(PostId);
     }
 

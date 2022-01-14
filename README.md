@@ -5,6 +5,7 @@
 
 ## Back-end Components
 ### Java API & PostGRES Database
+### Table setup with Prisma
 
 ## Server
 ### Vercel Deployment

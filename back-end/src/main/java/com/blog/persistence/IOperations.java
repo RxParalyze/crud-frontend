@@ -9,7 +9,7 @@ public interface IOperations<T extends Serializable> {
 
     // read - one
 
-    T findById(final long id);
+    T findById(final int id);
 
     // read - all
 
@@ -25,5 +25,5 @@ public interface IOperations<T extends Serializable> {
 
     void delete(final T entity);
 
-    void deleteById(final long entityId);
+    void deleteById(final int entityId);
 }

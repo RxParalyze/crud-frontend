@@ -37,7 +37,7 @@ public class PostController {
     }
 
     @GetMapping(value = "/{id}")
-    public Post findById(@PathVariable("id") Long id) {
+    public Post findById(@PathVariable("id") Integer id) {
         return RestPreconditions.checkFound(service.findById(id));
     }
 
@@ -50,7 +50,7 @@ public class PostController {
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Integer id) {
         service.deleteById(id);
     }
 

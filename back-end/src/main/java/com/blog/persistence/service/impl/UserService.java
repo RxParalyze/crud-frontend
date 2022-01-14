@@ -34,7 +34,7 @@ public class UserService extends AbstractService<User> implements IUserService {
     //blog
 
     @Override
-    protected PagingAndSortingRepository<User, Long> getDao() {
+    protected PagingAndSortingRepository<User, Integer> getDao() {
         return dao;
     }
 
@@ -47,7 +47,7 @@ public class UserService extends AbstractService<User> implements IUserService {
     }
 
     @Override
-    public User findById(long id) {
+    public User findById(int id) {
         User findUser = getDao().findById(id).get();
         return findUser;
     }
@@ -70,7 +70,7 @@ public class UserService extends AbstractService<User> implements IUserService {
     }
 
     @Override
-    public void deleteById(long UserId) {
+    public void deleteById(int UserId) {
         getDao().deleteById(UserId);
     }
 

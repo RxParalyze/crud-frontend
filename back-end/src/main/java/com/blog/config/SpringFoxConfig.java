@@ -33,7 +33,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@EnableJpaRepositories(basePackages = {"com.api.persistence.dao"})
+@EnableJpaRepositories(basePackages = {"com.blog.persistence.dao"})
 @EnableTransactionManagement
 @EnableConfigurationProperties(SpringProperties.class)
 //@PropertySource("classpath:config/db.properties")
