@@ -1,101 +1,66 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import html from 'remark-html'
 
-const apiDir = 'http://localhost:8080/api/'
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
-const postsDirectory = path.join(process.cwd(), 'posts')
 
-export async function getSortedPostsData() {
-  // Get file names under /posts
-  /*
-  const fileNames = fs.readdirSync(postsDirectory)
-  const allPostsData = fileNames.map(fileName => {
-    // Remove ".md" from file name to get id
-    const id = fileName.replace(/\.md$/, '')
+const postsDir = 'http://localhost:8080/api/posts'
+const usersDir = 'http://localhost:8080/api/users'
 
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
+//User Functions
 
-    // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents)
-
-
-    // Combine the data with the id
-    return {
-      id,
-      ...matterResult.data
-    }
-
-  })
-
-  // Sort posts by date
-  return allPostsData.sort(({ date: a }, { date: b }) => {
-    if (a < b) {
-      return 1
-    } else if (a > b) {
-      return -1
-    } else {
-      return 0
-    }
-  })
-    */
+export async function getSortedUsersData() {
+  const res = await fetcher(usersDir)
+  return res
 }
 
-export function useUser (id) {
-  const { data, error } = useSWR('users/${id}', fetcher)
+export async function getAllUserIds() {
+  const res = await fetcher(usersDir)
 
-  return {
-    user: data,
-    isLoading: !error && !data,
-    isError: error
-  }
-}
-
-export function getAllPostIds() {
-  const { data, error } = useSWR('posts', fetcher)
-
-  return {
-    post: data,
-    isLoading: !error && !data,
-    isError: error
-  }
-
-  // Returns an array that looks like this:
-  // [
-  //   {
-  //     params: {
-  //       id: 'ssg-ssr'
-  //     }
-  //   },
-  //   {
-  //     params: {
-  //       id: 'pre-rendering'
-  //     }
-  //   }
-  // ]
-
-  /*
-  const fileNames = fs.readdirSync(postsDirectory)
-  return fileNames.map(fileName => {
+  return res.map(user => {
     return {
       params: {
-        id: fileName.replace(/\.md$/, '')
+        id: user.id.toString()
       }
     }
   })
-  */
+}
+
+export async function getUserData(id) {
+  const userUrl = usersDir.concat('/', id)
+  const res = await fetcher(userUrl)
+  return res
+}
+
+//Post Functions
+
+export async function getSortedPostsData() {
+  const res = await fetcher(postsDir)
+  return res
+}
+
+export async function getAllPostIds() {
+  const res = await fetcher(postsDir)
+
+  return res.map(post => {
+    return {
+      params: {
+        id: post.id.toString()
+      }
+    }
+  })
 }
 
 export async function getPostData(id) {
-  const { data, error } = useSWR('posts/${id}', fetcher)
+  const postUrl = postsDir.concat('/', id)
+  const res = await fetcher(postUrl)
+  return res
+}
 
-  return {
-    post: data,
-    isLoading: !error && !data,
-    isError: error
-  }
+export async function getUserPostIds() {
+  const res = await getAllPostIds()
+
+}
+
+export async function getUserPostData(id) {
+  const postUrl = postsDir.concat('/', id)
+  const res = await fetcher(postUrl)
+  return res
 }
