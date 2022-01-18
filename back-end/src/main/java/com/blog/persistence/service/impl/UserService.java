@@ -31,8 +31,6 @@ public class UserService extends AbstractService<User> implements IUserService {
         super();
     }
 
-    //blog
-
     @Override
     protected PagingAndSortingRepository<User, Integer> getDao() {
         return dao;

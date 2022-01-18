@@ -42,20 +42,6 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 
     @Autowired
     private Environment env;
-/*
-    //Docker Packaging Datasource (db.properties)
-    @Bean
-    public BasicDataSource dataSource() {
-        BasicDataSource ds = new BasicDataSource();
-        System.out.println("User " + env.getProperty("db.username"));
-        ds.setDriverClassName(env.getProperty("db.driverClassName"));
-        ds.setUrl(env.getProperty("db.url"));
-        ds.setUsername(env.getProperty("db.username"));
-        ds.setPassword(env.getProperty("db.password"));
-        ds.setInitialSize(Integer.parseInt(env.getProperty("pool.initialSize")));
-        return ds;
-    }
-*/
 
     //Maven Packaging Datasource (application.properties)
     @Bean
@@ -80,7 +66,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
         LocalContainerEntityManagerFactoryBean em
             = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "com.api.persistence.model" });
+        em.setPackagesToScan(new String[] { "com.blog.persistence.model" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

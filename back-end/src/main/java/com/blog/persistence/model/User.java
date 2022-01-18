@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -13,16 +14,17 @@ import lombok.Data;
 @Table(name = "users", schema = "blog")
 @Data
 public class User implements Serializable {
+    @Id
     @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "userName")
+    @Column(name = "username")
     private String userName;
 
-    @Column(name = "passWord")
+    @Column(name = "pass_word")
     private String passWord;
 
     @Column(name = "created_at")

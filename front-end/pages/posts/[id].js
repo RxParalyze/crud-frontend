@@ -4,36 +4,19 @@ import Head from 'next/head'
 import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
 
+const apiDir = 'http://localhost:8080/api/'
+
 export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id)
-  return {
-    props: {
-      postData
+  const res = await fetch(apiDir + 'posts/' + params.id)
+  const data = await res.json()
+
+  if (!data) {
+    return {
+      notFound: true,
     }
   }
-}
 
-export async function getStaticPaths() {
-  const paths = getAllPostIds()
   return {
-    paths,
-    fallback: false
+    props: { data }, // will be passed to the page component as props
   }
 }
-
-export default function Post({ postData }) {
-    return (
-      <Layout>
-        <Head>
-          <title>{postData.title}</title>
-        </Head>
-        <article>
-          <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-          <div className={utilStyles.lightText}>
-            <Date dateString={postData.date} />
-          </div>
-          <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-        </article>
-      </Layout>
-    )
-  }

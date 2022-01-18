@@ -25,7 +25,7 @@ import com.google.common.base.Preconditions;
 
 @Slf4j
 @RestController
-@RequestMapping("/Posts")
+@RequestMapping("/posts")
 public class PostController {
 
     @Autowired

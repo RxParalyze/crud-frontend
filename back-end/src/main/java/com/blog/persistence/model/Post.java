@@ -5,14 +5,16 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "Post", schema = "blog")
+@Table(name = "posts", schema = "blog")
 @Data
 public class Post implements Serializable {
+    @Id
     @Column(name = "id")
     private Integer id;
 
@@ -28,7 +30,7 @@ public class Post implements Serializable {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "authorId")
+    @Column(name = "author_id")
     private String authorId;
 
     public Post() {

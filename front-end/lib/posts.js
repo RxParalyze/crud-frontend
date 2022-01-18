@@ -4,10 +4,13 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
 
+const apiDir = 'http://localhost:8080/api/'
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
 const postsDirectory = path.join(process.cwd(), 'posts')
 
-export function getSortedPostsData() {
+export async function getSortedPostsData() {
   // Get file names under /posts
+  /*
   const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames.map(fileName => {
     // Remove ".md" from file name to get id
@@ -20,12 +23,15 @@ export function getSortedPostsData() {
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents)
 
+
     // Combine the data with the id
     return {
       id,
       ...matterResult.data
     }
+
   })
+
   // Sort posts by date
   return allPostsData.sort(({ date: a }, { date: b }) => {
     if (a < b) {
@@ -36,10 +42,27 @@ export function getSortedPostsData() {
       return 0
     }
   })
+    */
+}
+
+export function useUser (id) {
+  const { data, error } = useSWR('users/${id}', fetcher)
+
+  return {
+    user: data,
+    isLoading: !error && !data,
+    isError: error
+  }
 }
 
 export function getAllPostIds() {
-  const fileNames = fs.readdirSync(postsDirectory)
+  const { data, error } = useSWR('posts', fetcher)
+
+  return {
+    post: data,
+    isLoading: !error && !data,
+    isError: error
+  }
 
   // Returns an array that looks like this:
   // [
@@ -54,6 +77,9 @@ export function getAllPostIds() {
   //     }
   //   }
   // ]
+
+  /*
+  const fileNames = fs.readdirSync(postsDirectory)
   return fileNames.map(fileName => {
     return {
       params: {
@@ -61,25 +87,15 @@ export function getAllPostIds() {
       }
     }
   })
+  */
 }
 
 export async function getPostData(id) {
-  const fullPath = path.join(postsDirectory, `${id}.md`)
-  const fileContents = fs.readFileSync(fullPath, 'utf8')
+  const { data, error } = useSWR('posts/${id}', fetcher)
 
-  // Use gray-matter to parse the post metadata section
-  const matterResult = matter(fileContents)
-
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content)
-  const contentHtml = processedContent.toString()
-
-  // Combine the data with the id and contentHtml
   return {
-    id,
-    contentHtml,
-    ...matterResult.data
+    post: data,
+    isLoading: !error && !data,
+    isError: error
   }
 }
