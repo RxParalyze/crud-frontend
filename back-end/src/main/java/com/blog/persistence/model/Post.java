@@ -24,6 +24,9 @@ public class Post implements Serializable {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "excerpt")
+    private String excerpt;
+
     @Column(name = "published")
     private Boolean published;
 
@@ -59,6 +62,14 @@ public class Post implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getExcerpt() {
+        return excerpt;
+    }
+
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
     }
 
     public Boolean getPublished() {

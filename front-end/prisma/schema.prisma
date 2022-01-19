@@ -14,6 +14,7 @@ model Post {
   id          Int       @default(autoincrement()) @id
   title       String
   content     String?
+  excerpt     String    @db.VarChar(100)
   published   Boolean   @default(false)
   createdAt   DateTime  @default(now()) @map(name: "created_at")
   author      User?     @relation(fields: [authorId], references: [id])
