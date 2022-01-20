@@ -12,7 +12,7 @@ export const postService = {
     get postValue () { return postSubject.value },
     create,
     getAll,
-    getBySlug,
+    getById,
     update,
     delete: _delete
 };
@@ -25,15 +25,15 @@ function getAll() {
     return fetchWrapper.get(baseUrl);
 }
 
-function getBySlug(slug) {
-    return fetchWrapper.get(`${baseUrl}/${slug}`);
+function getById(id) {
+    return fetchWrapper.get(`${baseUrl}/${id}`);
 }
 
-function update(slug, params) {
-    return fetchWrapper.put(`${baseUrl}/${slug}`, params)
+function update(id, params) {
+    return fetchWrapper.put(`${baseUrl}/${id}`, params)
         .then(x => {
             // update stored post if the logged in post updated their own record
-            if (slug === postSubject.value.slug) {
+            if (id === postSubject.value.id) {
                 // update local storage
                 const post = { ...postSubject.value, ...params };
                 localStorage.setItem('post', JSON.stringify(post));
@@ -46,6 +46,6 @@ function update(slug, params) {
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-function _delete(slug) {
-    return fetchWrapper.delete(`${baseUrl}/${slug}`);
+function _delete(id) {
+    return fetchWrapper.delete(`${baseUrl}/${id}`);
 }

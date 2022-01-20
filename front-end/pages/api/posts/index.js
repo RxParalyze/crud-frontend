@@ -1,4 +1,4 @@
-import { apiHandler, postsRepo, omit } from '../../../helpers/api';
+import { apiHandler, postsRepo } from '../../../helpers/api';
 
 export default apiHandler({
     get: getPosts

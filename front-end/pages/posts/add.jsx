@@ -1,4 +1,4 @@
-import { Layout, AddEdit } from '../../../components/posts';
+import { Layout, AddEdit } from '../../components/posts';
 
 export default Add;
 

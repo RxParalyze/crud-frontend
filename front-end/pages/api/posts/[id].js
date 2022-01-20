@@ -12,7 +12,7 @@ function getById(req, res) {
 
     if (!post) throw 'Post Not Found';
 
-    return res.status(200).json(omit(post, 'hash'));
+    return res.status(200).json(post);
 }
 
 function update(req, res) {
