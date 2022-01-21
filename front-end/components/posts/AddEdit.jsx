@@ -38,7 +38,7 @@ function AddEdit(props) {
     }
 
     function createPost(data) {
-        return postService.create(data)
+        return postService.publish(data)
             .then(() => {
                 alertService.success('Post added', { keepAfterRouteChange: true });
                 router.push('.');

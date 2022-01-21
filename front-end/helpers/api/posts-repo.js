@@ -13,8 +13,8 @@ export const postsRepo = {
 
 function create(post) {
     // generate new post id and excerpt
-    post.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
-    post.excerpt = post.content.substring(0,99);
+    post.id = posts.length ? Math.max(...posts.map(x => x.id)) + 1 : 1;
+    post.excerpt = post.content.substring(0,99).concat('...');
 
     // set date created and updated
     post.dateCreated = new Date().toISOString();
@@ -27,7 +27,7 @@ function create(post) {
 
 function update(id, params) {
     const post = posts.find(x => x.id.toString() === id.toString());
-    post.excerpt = post.content.substring(0,99);
+    post.excerpt = post.content.substring(0,99).concat('...');
 
     // set date updated
     post.dateUpdated = new Date().toISOString();
@@ -48,5 +48,5 @@ function _delete(id) {
 // private helper functions
 
 function saveData() {
-    fs.writeFileSync('../../data/posts.json', JSON.stringify(posts, null, 4));
+    fs.writeFileSync('data/posts.json', JSON.stringify(posts, null, 4));
 }

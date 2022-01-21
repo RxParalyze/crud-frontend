@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import '../styles/globals.css'
-import Layout from '../components/layout/layout';
 import { userService } from '../services';
 import { Nav, Alert } from '../components';
+import { FeaturedPosts } from '../components/home-page/featured-posts'
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function App({ Component, pageProps }) {
       }
   }
   return (
-    <Layout>
+    <dir>
       <Head>
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <title>User Registration and Login</title>
@@ -62,8 +62,6 @@ export default function App({ Component, pageProps }) {
               <Component {...pageProps} />
           }
       </div>
-
-      <Component {...pageProps} />
-    </Layout>
+    </dir>
   );
 }

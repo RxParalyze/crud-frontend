@@ -1,10 +1,10 @@
 import { apiHandler, postsRepo } from '../../../helpers/api';
 
 export default apiHandler({
-    post: create
+    post: publish
 });
 
-function create(req, res) {
+function publish(req, res) {
     const { ...post } = req.body;
 
     // validate

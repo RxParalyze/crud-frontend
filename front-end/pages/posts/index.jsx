@@ -39,6 +39,7 @@ function Index() {
                     {posts && posts.map(post =>
                         <tr key={post.id}>
                             <td>{post.title}</td>
+                            <td>{post.excerpt}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
                                 <Link href={`/posts/edit/${post.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
                                 <button onClick={() => deletePost(post.id)} className="btn btn-sm btn-danger btn-delete-post" disabled={post.isDeleting}>

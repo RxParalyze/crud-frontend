@@ -5,6 +5,6 @@ export default apiHandler({
 });
 
 function getPosts(req, res) {
-    const response = postsRepo.getAll().map();
+    const response = postsRepo.getAll().map(x => x);
     return res.status(200).json(response);
 }

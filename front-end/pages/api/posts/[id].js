@@ -1,5 +1,5 @@
 import { apiHandler } from '../../../helpers/api';
-import { postsRepo, omit } from '../../../helpers/api';
+import { postsRepo } from '../../../helpers/api';
 
 export default apiHandler({
     get: getById,

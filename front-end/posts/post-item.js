@@ -4,9 +4,9 @@ import classes from './all-posts.module.css';
 import Date from '../components/date';
 
 function PostItem(props) {
-    const { title, excerpt, date, slug } = props.post;
+    const { title, excerpt, date, id } = props.post;
 
-    const linkPath = `/posts/${slug}`;
+    const linkPath = `/posts/${id}`;
 
     const formattedDate = Date(date);
 

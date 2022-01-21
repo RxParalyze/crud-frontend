@@ -10,15 +10,15 @@ const postSubject = new BehaviorSubject(process.browser && JSON.parse(localStora
 export const postService = {
     post: postSubject.asObservable(),
     get postValue () { return postSubject.value },
-    create,
+    publish,
     getAll,
     getById,
     update,
     delete: _delete
 };
 
-function create(post) {
-    return fetchWrapper.post(`${baseUrl}/create`, post);
+function publish(post) {
+    return fetchWrapper.post(`${baseUrl}/publish`, post);
 }
 
 function getAll() {
@@ -32,15 +32,12 @@ function getById(id) {
 function update(id, params) {
     return fetchWrapper.put(`${baseUrl}/${id}`, params)
         .then(x => {
-            // update stored post if the logged in post updated their own record
-            if (id === postSubject.value.id) {
-                // update local storage
-                const post = { ...postSubject.value, ...params };
-                localStorage.setItem('post', JSON.stringify(post));
+            // update local storage
+            const post = { ...postSubject.value, ...params };
+            localStorage.setItem('post', JSON.stringify(post));
 
-                // publish updated post to subscribers
-                postSubject.next(post);
-            }
+            // publish updated post to subscribers
+            postSubject.next(post);
             return x;
         });
 }
