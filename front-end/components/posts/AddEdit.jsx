@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import utilStyles from '../../styles/utils.module.css'
 
 import { Link } from '../../components';
 import { postService, alertService } from '../../services';
@@ -10,6 +11,7 @@ export { AddEdit };
 
 function AddEdit(props) {
     const post = props?.post;
+    const user = props?.user;
     const isAddMode = !post;
     const router = useRouter();
 
@@ -67,7 +69,7 @@ function AddEdit(props) {
             <div className="form-row">
                 <div className="form-group col">
                     <label>Content</label>
-                    <input name="content" type="text" {...register('content')} className={`form-control ${errors.content ? 'is-invalid' : ''}`} />
+                    <textarea name="content" type="content" {...register('content')} className={utilStyles.formGrpCol} />
                     <div className="invalid-feedback">{errors.content?.message}</div>
                 </div>
             </div>

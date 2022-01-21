@@ -64,3 +64,7 @@ export async function getUserPostData(id) {
   const res = await fetcher(postUrl)
   return res
 }
+
+export async function createPost(post) {
+  return await fetcher(postUrl, post);
+}

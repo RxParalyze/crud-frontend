@@ -38,7 +38,11 @@ function Index() {
                 <tbody>
                     {posts && posts.map(post =>
                         <tr key={post.id}>
-                            <td>{post.title}</td>
+                            <td>
+                                <Link href={`/posts/${post.id}`} className="btn btn-sm btn-primary mr-2">
+                                    {post.title}
+                                </Link>
+                            </td>
                             <td>{post.excerpt}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
                                 <Link href={`/posts/edit/${post.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>

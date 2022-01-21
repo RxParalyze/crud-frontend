@@ -2,6 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 
 import { fetchWrapper } from '../helpers';
+import { getAllPostIds, getPostData, getUserData, createPost } from '../lib/posts';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/posts`;
@@ -18,6 +19,7 @@ export const postService = {
 };
 
 function publish(post) {
+    createPost(post);
     return fetchWrapper.post(`${baseUrl}/publish`, post);
 }
 
