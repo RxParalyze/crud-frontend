@@ -13,15 +13,21 @@ export const postsRepo = {
     delete: _delete
 };
 
+function getDate(){
+    return new Date().toISOString();
+}
+
 async function create(post, user) {
     // generate new post id and excerpt
     post.id = posts.length ? Math.max(...posts.map(x => x.id)) + 1 : 1;
     post.excerpt = post.content.substring(0,99).concat('...');
-    post.author_id = user.id;
+    post.authorId = user.id;
 
     // set date created and updated
-    post.created_at = new Date().toISOString();
-    post.updated_at = new Date().toISOString();
+    post.createdAt = getDate();
+    post.updatedAt = getDate();
+
+    post.published = true;
 
     // add and save post
     posts.push(post);
@@ -29,19 +35,17 @@ async function create(post, user) {
     await addToRepo(post);
 }
 
-async function update(id, params, user) {
+async function update(id, params) {
     const post = posts.find(x => x.id.toString() === id.toString());
-    if(post.author_id == user.id) {
-        post.excerpt = post.content.substring(0,99).concat('...');
 
-        // set date updated
-        post.updated_at = new Date().toISOString();
+    // set date updated
+    post.updatedAt = getDate();
 
-        // update and save
-        Object.assign(post, params);
-        saveData();
-        await updateRepo(post);
-    }
+    // update and save
+    Object.assign(post, params);
+    post.excerpt = post.content.substring(0,99).concat('...');
+    saveData();
+    await updateRepo(post);
 }
 
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
@@ -49,7 +53,7 @@ async function _delete(id, user) {
     // filter out deleted post and save
     const post = posts.find(x => x.id.toString() === id.toString());
 
-    if(post.author_id == user.id) {
+    if(post.authorId == user.id) {
         posts = posts.filter(x => x.id.toString() !== id.toString());
         saveData();
         await deleteFromRepo(post);

@@ -13,13 +13,17 @@ export const usersRepo = {
     delete: _delete
 };
 
+function getDate(){
+    new Date().toISOString();
+}
+
 async function create(user) {
     // generate new user id
     user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
 
     // set date created and updated
-    user.created_at = new Date().toISOString();
-    user.updated_at = new Date().toISOString();
+    user.createdAt = getDate();
+    user.updatedAt = getDate();
 
     // add and save user
     users.push(user);
@@ -31,19 +35,23 @@ async function update(id, params) {
     const user = users.find(x => x.id.toString() === id.toString());
 
     // set date updated
-    user.updated_at = new Date().toISOString();
+    user.updatedAt = getDate();
 
     // update and save
     Object.assign(user, params);
     saveData();
+    await updateRepo(user);
 }
 
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
 async function _delete(id) {
+
+    const user = users.find(x => x.id.toString() === id.toString());
+
     // filter out deleted user and save
     users = users.filter(x => x.id.toString() !== id.toString());
     saveData();
-
+    await deleteFromRepo(user);
 }
 
 // private helper functions

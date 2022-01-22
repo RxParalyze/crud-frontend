@@ -16,7 +16,8 @@ model Post {
   content     String?
   excerpt     String    @db.VarChar(102)
   published   Boolean   @default(false)
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  createdAt   DateTime  @default(now()) @map(name: "created_at") @db.Timestamp(3)
+  updatedAt   DateTime  @default(now()) @map(name: "updated_at") @db.Timestamp(3)
   author      User?     @relation(fields: [authorId], references: [id])
   authorId    Int?      @map(name: "author_id")
   @@map(name: "posts")
@@ -28,8 +29,8 @@ model User {
   lastName      String?   @map(name: "last_name")
   username      String?   @unique
   hash          String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  createdAt     DateTime  @default(now()) @map(name: "created_at") @db.Timestamp(3)
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at") @db.Timestamp(3)
   posts         Post[]
   @@map(name: "users")
 }

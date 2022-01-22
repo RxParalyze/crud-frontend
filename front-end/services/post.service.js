@@ -2,10 +2,9 @@ import { BehaviorSubject } from 'rxjs';
 import getConfig from 'next/config';
 
 import { fetchWrapper } from '../helpers';
-import { getAllPostIds, getPostData, getUserData, createPost } from '../lib/posts';
 
 const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}/posts`;
+const baseUrl = 'http://localhost:8080/api/posts';
 const postSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('post')));
 
 export const postService = {
@@ -19,8 +18,7 @@ export const postService = {
 };
 
 function publish(post) {
-    createPost(post);
-    return fetchWrapper.post(`${baseUrl}/publish`, post);
+    return fetchWrapper.post(`${baseUrl}`, post);
 }
 
 function getAll() {

@@ -1,9 +1,7 @@
-import { getAllPostIds, getPostData, getUserData } from '../../lib/posts'
+import { getAllPostIds, getPostData } from '../../lib/posts'
+import { getUserData } from '../../lib/users'
 import Head from 'next/head'
 import utilStyles from '../../styles/utils.module.css'
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
-const userApi = 'http://localhost:8080/users/'
 
 export default function Post({ postData, userData }) {
   return (
@@ -13,9 +11,9 @@ export default function Post({ postData, userData }) {
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-        <h2 className={utilStyles.h2}>by {userData.name}</h2>
+        <h2 className={utilStyles.h2}>by {userData.first_name}</h2>
         <div className={utilStyles.lightText}>
-          published {postData.createdAt}
+          published {postData.created_at}
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.content }} />
       </article>
@@ -30,7 +28,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({params}) {
   const postData = await getPostData(params.id)
-  const userData = await getUserData(postData.authorId)
+  const userData = await getUserData(postData.author_id)
 
   return {
     props: {
