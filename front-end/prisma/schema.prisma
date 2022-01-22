@@ -14,7 +14,7 @@ model Post {
   id          Int       @default(autoincrement()) @id
   title       String
   content     String?
-  excerpt     String    @db.VarChar(100)
+  excerpt     String    @db.VarChar(102)
   published   Boolean   @default(false)
   createdAt   DateTime  @default(now()) @map(name: "created_at")
   author      User?     @relation(fields: [authorId], references: [id])
@@ -24,9 +24,10 @@ model Post {
 
 model User {
   id            Int       @default(autoincrement()) @id
-  name          String?
+  firstName     String?   @map(name: "first_name")
+  lastName      String?   @map(name: "last_name")
   username      String?   @unique
-  password      String?   @map(name: "pass_word")
+  hash          String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   posts         Post[]

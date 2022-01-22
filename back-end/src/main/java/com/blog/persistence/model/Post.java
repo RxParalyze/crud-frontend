@@ -34,7 +34,7 @@ public class Post implements Serializable {
     private LocalDateTime createdAt;
 
     @Column(name = "author_id")
-    private String authorId;
+    private Integer authorId;
 
     public Post() {
         super();
@@ -88,11 +88,11 @@ public class Post implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public String getAuthorId() {
+    public Integer getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
     }
 
