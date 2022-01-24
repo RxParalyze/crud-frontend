@@ -9,9 +9,19 @@ import classes from './post-content.module.css';
 function PostContent(props) {
   const { post } = props;
 
-  const imagePath = `/images/posts/${post.id}/${post.image}`;
+  const imagePath = `/images/posts/${post.slug}/${post.image}`;
 
   const customRenderers = {
+    // img(image) {
+    //   return (
+    //     <Image
+    //       src={`/images/posts/${post.slug}/${image.src}`}
+    //       alt={image.alt}
+    //       width={600}
+    //       height={300}
+    //     />
+    //   );
+    // },
     p(paragraph) {
       const { node } = paragraph;
 
@@ -21,7 +31,7 @@ function PostContent(props) {
         return (
           <div className={classes.image}>
             <Image
-              src={`/images/posts/${post.id}/${image.properties.src}`}
+              src={`/images/posts/${post.slug}/${image.properties.src}`}
               alt={image.alt}
               width={600}
               height={300}
@@ -48,7 +58,7 @@ function PostContent(props) {
 
   return (
     <article className={classes.content}>
-      <PostHeader title={post.title} />
+      <PostHeader title={post.title} image={imagePath} />
       <ReactMarkdown components={customRenderers}>{post.content}</ReactMarkdown>
     </article>
   );

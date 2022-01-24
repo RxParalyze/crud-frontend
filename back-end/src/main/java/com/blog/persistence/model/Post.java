@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,6 +17,7 @@ import lombok.Data;
 @Data
 public class Post implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -33,8 +36,11 @@ public class Post implements Serializable {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @Column(name = "author_id")
-    private String authorId;
+    private Integer authorId;
 
     public Post() {
         super();
@@ -72,6 +78,10 @@ public class Post implements Serializable {
         this.excerpt = excerpt;
     }
 
+    public void generateExcerpt(){
+        this.excerpt = this.content.substring(0, 99) + "...";
+    }
+
     public Boolean getPublished() {
         return published;
     }
@@ -88,11 +98,19 @@ public class Post implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public String getAuthorId() {
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Integer getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
     }
 

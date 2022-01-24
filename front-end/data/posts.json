@@ -1,0 +1,43 @@
+[
+    {
+        "id": 1,
+        "title": "The Cake",
+        "content": "The cake is a lie. sorry",
+        "excerpt": "The cake is a lie. sorry...",
+        "published": true,
+        "createdAt": "2022-01-19T15:25:54.972Z",
+        "authorId": 1,
+        "updatedAt": 1642827600,
+        "updatedAt": "2022-01-22T19:01:17.958Z"
+    },
+    {
+        "id": 2,
+        "title": "Does it work?",
+        "content": "Yes, it surprisingly works.",
+        "excerpt": "Yes, it surprisingly works. ",
+        "published": true,
+        "createdAt": "2022-01-19T15:26:59.911Z",
+        "updatedAt": "2022-01-19T15:26:59.911Z",
+        "authorId": 1
+    },
+    {
+        "id": 3,
+        "title": "Anotha one",
+        "content": "Just testing this out. would like it to actually add the three dots. That would be really cool. we'll see if she wants to play nice. I have my doubts. I probably need to add some other mumbo jumbo to make the black magic front-end work. Idk. ",
+        "excerpt": "Just testing this out. would like it to actually add the three dots. That would be really cool. we'...",
+        "published": true,
+        "createdAt": "2022-01-21T15:53:57.104Z",
+        "updatedAt": "2022-01-21T15:53:57.104Z",
+        "authorId": 1
+    },
+    {
+        "id": 4,
+        "title": "Creating a Post",
+        "content": "This is the whole post. yes, this is it. I just created a whole post by myself. Nobody else has created such an elegant post. It's as if this post is simply a joke/jest to test out my Blog. But surely that couldn't be the case. I only make serious posts. Semper Supra!",
+        "excerpt": "This is the whole post. yes, this is it. I just created a whole post by myself. Nobody else has cre...",
+        "published": true,
+        "createdAt": "2022-01-21T15:54:19.364Z",
+        "updatedAt": "2022-01-21T15:54:19.364Z",
+        "authorId": 1
+    }
+]
