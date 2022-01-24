@@ -1,51 +1,55 @@
-import { register, update, _delete } from '../../services/user.service';
+import { getById, getAll, register, update, _delete } from '../../services/user.service';
+const bcrypt = require('bcryptjs');
 
-
-let users = require('../../data/users.json');
+let users = getAll();
 
 export const usersRepo = {
     getAll: () => users,
-    getById: id => users.find(x => x.id.toString() === id.toString()),
+    getById: id => getById(id),
     find: x => users.find(x),
     registerUser,
     updateUser,
     deleteUser
 };
 
-function getDate(){
-    new Date().toISOString();
+function getUser() {
+    const data = localStorage.getItem('user');
+    const dataJson = JSON.parse(data);
+
+    return dataJson;
 }
 
 export async function registerUser(user) {
     // generate new user id
-    user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
+    user.id = await getAll().length + 1;
 
     // set date created and updated
-    user.createdAt = getDate();
-    user.updatedAt = getDate();
+    user.createdAt = new Date().toISOString();
+    user.updatedAt = new Date().toISOString();
+    user.hash = bcrypt.hashSync(user.password, 10);
+
 
     console.log(user);
 
     // add and save user
-    users.push(user);
     return register(user);
 }
 
 export async function updateUser(id, params) {
-    const user = users.find(x => x.id.toString() === id.toString());
-
-    // set date updated
-    user.updatedAt = getDate();
+    const user = getById(id);
+    Object.assign(user, params);
 
     // update and save
-    Object.assign(user, params);
+    user.updatedAt = new Date().toISOString();
     return update(user.id, params);
 }
 
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
 export async function deleteUser(id) {
+    const user = getById(id);
+    const loggedUser = getUser();
 
-    // filter out deleted user and save
-    users = users.filter(x => x.id.toString() !== id.toString());
-    return _delete(id);
+    if(user.id == loggedUser.id) {
+        return _delete(id);
+    }
 }

@@ -20,7 +20,7 @@ function AddEdit(props) {
             .required('First Name is required'),
         lastName: Yup.string()
             .required('Last Name is required'),
-        username: Yup.string()
+        userName: Yup.string()
             .required('Username is required'),
         password: Yup.string()
             .transform(x => x === '' ? undefined : x)
@@ -45,6 +45,7 @@ function AddEdit(props) {
     }
 
     function create(data) {
+        console.log(data);
         return registerUser(data)
             .then(() => {
                 alertService.success('User added', { keepAfterRouteChange: true });
@@ -79,8 +80,8 @@ function AddEdit(props) {
             <div className="form-row">
                 <div className="form-group col">
                     <label>Username</label>
-                    <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
-                    <div className="invalid-feedback">{errors.username?.message}</div>
+                    <input name="userName" type="text" {...register('userName')} className={`form-control ${errors.userName ? 'is-invalid' : ''}`} />
+                    <div className="invalid-feedback">{errors.userName?.message}</div>
                 </div>
                 <div className="form-group col">
                     <label>

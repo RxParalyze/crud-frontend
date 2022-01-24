@@ -5,20 +5,21 @@ import * as Yup from 'yup';
 
 import { Link } from '../../components';
 import { Layout } from '../../components/account';
-import { userService, alertService } from '../../services';
+import { alertService } from '../../services';
+import { registerUser } from '../../helpers/api/users-repo'
 
 export default Register;
 
 function Register() {
     const router = useRouter();
 
-    // form validation rules 
+    // form validation rules
     const validationSchema = Yup.object().shape({
         firstName: Yup.string()
             .required('First Name is required'),
         lastName: Yup.string()
             .required('Last Name is required'),
-        username: Yup.string()
+        userName: Yup.string()
             .required('Username is required'),
         password: Yup.string()
             .required('Password is required')
@@ -31,7 +32,7 @@ function Register() {
     const { errors } = formState;
 
     function onSubmit(user) {
-        return userService.register(user)
+        return registerUser(user)
             .then(() => {
                 alertService.success('Registration successful', { keepAfterRouteChange: true });
                 router.push('login');
@@ -57,8 +58,8 @@ function Register() {
                         </div>
                         <div className="form-group">
                             <label>Username</label>
-                            <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
-                            <div className="invalid-feedback">{errors.username?.message}</div>
+                            <input name="userName" type="text" {...register('userName')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
+                            <div className="invalid-feedback">{errors.userName?.message}</div>
                         </div>
                         <div className="form-group">
                             <label>Password</label>

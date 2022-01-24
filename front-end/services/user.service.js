@@ -21,8 +21,8 @@ export const userService = {
     delete: _delete
 };
 
-async function login(username, password) {
-    return fetchWrapper.post(`${baseUrl}/authenticate`, { username, password })
+async function login(userName, password) {
+    return fetchWrapper.post(`${baseUrl}/authenticate`, { userName, password })
         .then(user => {
             // publish user to subscribers and store in local storage to stay logged in between page refreshes
             userSubject.next(user);
@@ -43,11 +43,11 @@ export async function register(user) {
     return fetchWrapper.post(`${userApi}`, user);
 }
 
-export function getAll() {
+export async function getAll() {
     return fetchWrapper.get(userApi);
 }
 
-export function getById(id) {
+export async function getById(id) {
     return fetchWrapper.get(`${userApi}/${id}`);
 }
 

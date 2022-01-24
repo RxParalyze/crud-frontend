@@ -12,7 +12,7 @@ export default Login;
 function Login() {
     const router = useRouter();
 
-    // form validation rules 
+    // form validation rules
     const validationSchema = Yup.object().shape({
         username: Yup.string().required('Username is required'),
         password: Yup.string().required('Password is required')
@@ -24,6 +24,7 @@ function Login() {
     const { errors } = formState;
 
     function onSubmit({ username, password }) {
+
         return userService.login(username, password)
             .then(() => {
                 // get return url from query parameters or default to '/'
