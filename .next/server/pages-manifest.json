@@ -2,7 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/users/edit/[id]": "pages/users/edit/[id].js",
-  "/posts/edit/[id]": "pages/posts/edit/[id].js",
-  "/api/users/authenticate": "pages/api/users/authenticate.js"
+  "/posts/[id]": "pages/posts/[id].js"
 }
