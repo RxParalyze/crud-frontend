@@ -1,0 +1,20 @@
+[
+    {
+        "firstName": "Phillip",
+        "lastName": "Jorgensen",
+        "username": "RxParalyze",
+        "hash": "$2a$10$9fwU2C2Da4W2wVBDeWgnUuWEwYcou7KK8e6jsH0kxlvcfhv0hDMwG",
+        "id": 1,
+        "createdAt": "2022-01-19T15:24:49.95",
+        "updatedAt": "2022-01-22T17:06:28.112"
+    },
+    {
+        "firstName": "John",
+        "lastName": "Bonjovie",
+        "username": "JBovie",
+        "hash": "$2a$10$aa4QvawRzfmrj98HYl1OMerQSrE2X.4KEjDtQZ5i2B6WJHRWpUree",
+        "id": 2,
+        "createdAt": "2022-01-22T18:04:12.708Z",
+        "updatedAt": "2022-01-22T18:04:12.708Z"
+    }
+]
