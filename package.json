@@ -6,6 +6,9 @@
     "start": "next start -p $PORT",
     "lint": "next lint"
   },
+  "engines": {
+    "node": "^16.10.0"
+  },
   "dependencies": {
     "@hookform/resolvers": "^2.7.1",
     "@prisma/client": "^3.8.0",
