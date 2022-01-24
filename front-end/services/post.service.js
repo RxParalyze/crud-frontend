@@ -4,7 +4,8 @@ import getConfig from 'next/config';
 import { fetchWrapper } from '../helpers';
 
 const { publicRuntimeConfig } = getConfig();
-const baseUrl = 'http://localhost:8080/api/posts';
+const baseUrl = `${publicRuntimeConfig.apiUrl}/posts`;
+const postApi = 'http://localhost:8080/api/posts';
 const postSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('post')));
 
 export const postService = {
@@ -12,25 +13,37 @@ export const postService = {
     get postValue () { return postSubject.value },
     publish,
     getAll,
+    getAllPostIds,
     getById,
-    update,
+    updatePost,
     delete: _delete
 };
 
-function publish(post) {
-    return fetchWrapper.post(`${baseUrl}`, post);
+export async function publish(post) {
+    return fetchWrapper.post(`${postApi}`, post);
 }
 
-function getAll() {
-    return fetchWrapper.get(baseUrl);
+export async function getAll() {
+    return fetchWrapper.get(postApi);
 }
 
-function getById(id) {
-    return fetchWrapper.get(`${baseUrl}/${id}`);
+export async function getAllPostIds() {
+    const res = await fetchWrapper.get(postApi);
+    return res.map(post => {
+        return {
+          params: {
+            id: post.id.toString()
+          }
+        }
+    })
 }
 
-function update(id, params) {
-    return fetchWrapper.put(`${baseUrl}/${id}`, params)
+export async function getById(id) {
+    return fetchWrapper.get(`${postApi}/${id}`);
+}
+
+export async function updatePost(id, params) {
+    return fetchWrapper.put(`${postApi}/${id}`, params)
         .then(x => {
             // update local storage
             const post = { ...postSubject.value, ...params };
@@ -43,6 +56,6 @@ function update(id, params) {
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-function _delete(id) {
-    return fetchWrapper.delete(`${baseUrl}/${id}`);
+export async function _delete(id) {
+    return fetchWrapper.delete(`${postApi}/${id}`);
 }

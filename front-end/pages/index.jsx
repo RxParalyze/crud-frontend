@@ -1,16 +1,23 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/layout.module.css'
-import utilStyles from '../styles/utils.module.css'
-import { userService } from '../services';
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/layout.module.css';
+import utilStyles from '../styles/utils.module.css';
 import { Link } from '../components';
 
-const name = 'Space Force Blog'
-export const siteTitle = 'Space Force Blog'
+const name = 'Space Force Blog';
+
+export const siteTitle = 'Space Force Blog';
 
 export default Home;
 
+
 function Home({ home }) {
+
+    const data = localStorage.getItem('user');
+    const dataJson = JSON.parse(data);
+    //console.log(dataJson);
+    const firstName = dataJson.firstName;
+
     return (
         <div className="p-4">
              <Head>
@@ -52,7 +59,7 @@ function Home({ home }) {
                 )}
             </header>
             <div className="container">
-                <h1>Hi {userService.userValue?.firstName}!</h1>
+                <h1>Hi {firstName}!</h1>
                 <p>You&apos;re logged into the Space Force Blog</p>
                 <p><Link href="/users">Manage Users</Link></p>
                 <p><Link href="/posts">See Posts</Link></p>

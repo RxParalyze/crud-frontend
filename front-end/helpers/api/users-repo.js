@@ -1,6 +1,5 @@
-import { createUser, updateUser, deleteUser } from '../../lib/users';
+import { register, update, _delete } from '../../services/user.service';
 
-const fs = require('fs');
 
 let users = require('../../data/users.json');
 
@@ -8,16 +7,16 @@ export const usersRepo = {
     getAll: () => users,
     getById: id => users.find(x => x.id.toString() === id.toString()),
     find: x => users.find(x),
-    create,
-    update,
-    delete: _delete
+    registerUser,
+    updateUser,
+    deleteUser
 };
 
 function getDate(){
     new Date().toISOString();
 }
 
-async function create(user) {
+export async function registerUser(user) {
     // generate new user id
     user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
 
@@ -25,13 +24,14 @@ async function create(user) {
     user.createdAt = getDate();
     user.updatedAt = getDate();
 
+    console.log(user);
+
     // add and save user
     users.push(user);
-    saveData();
-    await addToRepo(user);
+    return register(user);
 }
 
-async function update(id, params) {
+export async function updateUser(id, params) {
     const user = users.find(x => x.id.toString() === id.toString());
 
     // set date updated
@@ -39,35 +39,13 @@ async function update(id, params) {
 
     // update and save
     Object.assign(user, params);
-    saveData();
-    await updateRepo(user);
+    return update(user.id, params);
 }
 
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
-async function _delete(id) {
-
-    const user = users.find(x => x.id.toString() === id.toString());
+export async function deleteUser(id) {
 
     // filter out deleted user and save
     users = users.filter(x => x.id.toString() !== id.toString());
-    saveData();
-    await deleteFromRepo(user);
-}
-
-// private helper functions
-
-function saveData() {
-    fs.writeFileSync('data/users.json', JSON.stringify(users, null, 4));
-}
-
-async function addToRepo(user) {
-    return await createUser(user);
-}
-
-async function deleteFromRepo(user) {
-    return await deleteUser(user);
-}
-
-async function updateRepo(user) {
-    return await updateUser(user);
+    return _delete(id);
 }

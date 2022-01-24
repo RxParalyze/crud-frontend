@@ -4,7 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { Link } from '../../components';
-import { userService, alertService } from '../../services';
+import { alertService } from '../../services';
+import { registerUser, updateUser } from '../../helpers/api/users-repo'
 
 export { AddEdit };
 
@@ -39,12 +40,12 @@ function AddEdit(props) {
 
     function onSubmit(data) {
         return isAddMode
-            ? createUser(data)
-            : updateUser(user.id, data);
+            ? create(data)
+            : update(user.id, data);
     }
 
-    function createUser(data) {
-        return userService.register(data)
+    function create(data) {
+        return registerUser(data)
             .then(() => {
                 alertService.success('User added', { keepAfterRouteChange: true });
                 router.push('.');
@@ -52,8 +53,8 @@ function AddEdit(props) {
             .catch(alertService.error);
     }
 
-    function updateUser(id, data) {
-        return userService.update(id, data)
+    function update(id, data) {
+        return updateUser(id, data)
             .then(() => {
                 alertService.success('User updated', { keepAfterRouteChange: true });
                 router.push('..');
@@ -79,7 +80,7 @@ function AddEdit(props) {
                 <div className="form-group col">
                     <label>Username</label>
                     <input name="username" type="text" {...register('username')} className={`form-control ${errors.username ? 'is-invalid' : ''}`} />
-                    <div className="invalid-feedback">{errors.email?.message}</div>
+                    <div className="invalid-feedback">{errors.username?.message}</div>
                 </div>
                 <div className="form-group col">
                     <label>

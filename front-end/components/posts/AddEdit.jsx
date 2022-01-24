@@ -5,13 +5,13 @@ import * as Yup from 'yup';
 import utilStyles from '../../styles/utils.module.css'
 
 import { Link } from '../../components';
-import { postService, alertService } from '../../services';
+import { alertService } from '../../services';
+import { createPost, editPost } from '../../helpers/api/posts-repo'
 
 export { AddEdit };
 
 function AddEdit(props) {
     const post = props?.post;
-    const user = props?.user;
     const isAddMode = !post;
     const router = useRouter();
 
@@ -35,12 +35,12 @@ function AddEdit(props) {
 
     function onSubmit(data) {
         return isAddMode
-            ? createPost(data)
-            : updatePost(post.id, data);
+            ? create(data)
+            : update(post.id, data);
     }
 
-    function createPost(data) {
-        return postService.publish(data)
+    function create(data) {
+        return createPost(data)
             .then(() => {
                 alertService.success('Post added', { keepAfterRouteChange: true });
                 router.push('.');
@@ -48,8 +48,8 @@ function AddEdit(props) {
             .catch(alertService.error);
     }
 
-    function updatePost(id, data) {
-        return postService.update(id, data)
+    function update(id, data) {
+        return editPost(id, data)
             .then(() => {
                 alertService.success('Post updated', { keepAfterRouteChange: true });
                 router.push('..');

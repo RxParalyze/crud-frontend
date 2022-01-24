@@ -6,6 +6,7 @@ import { fetchWrapper } from '../helpers';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
+const userApi = 'http://localhost:8080/api/users';
 const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 
 export const userService = {
@@ -20,7 +21,7 @@ export const userService = {
     delete: _delete
 };
 
-function login(username, password) {
+async function login(username, password) {
     return fetchWrapper.post(`${baseUrl}/authenticate`, { username, password })
         .then(user => {
             // publish user to subscribers and store in local storage to stay logged in between page refreshes
@@ -38,20 +39,20 @@ function logout() {
     Router.push('/account/login');
 }
 
-function register(user) {
-    return fetchWrapper.post(`${baseUrl}/register`, user);
+export async function register(user) {
+    return fetchWrapper.post(`${userApi}`, user);
 }
 
-function getAll() {
-    return fetchWrapper.get(baseUrl);
+export function getAll() {
+    return fetchWrapper.get(userApi);
 }
 
-function getById(id) {
-    return fetchWrapper.get(`${baseUrl}/${id}`);
+export function getById(id) {
+    return fetchWrapper.get(`${userApi}/${id}`);
 }
 
-function update(id, params) {
-    return fetchWrapper.put(`${baseUrl}/${id}`, params)
+export async function update(id, params) {
+    return fetchWrapper.put(`${userApi}/${id}`, params)
         .then(x => {
             // update stored user if the logged in user updated their own record
             if (id === userSubject.value.id) {
@@ -63,10 +64,10 @@ function update(id, params) {
                 userSubject.next(user);
             }
             return x;
-        });
+    });
 }
 
 // prefixed with underscored because delete is a reserved word in javascript
-function _delete(id) {
-    return fetchWrapper.delete(`${baseUrl}/${id}`);
+export async function _delete(id) {
+    return fetchWrapper.delete(`${userApi}/${id}`);
 }

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import '../styles/globals.css'
 import { userService } from '../services';
 import { Nav, Alert } from '../components';
-import { FeaturedPosts } from '../components/home-page/featured-posts'
+import { FeaturedPosts } from '../components/home-page/featured-posts';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -13,14 +13,14 @@ export default function App({ Component, pageProps }) {
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-      // on initial load - run auth check 
+      // on initial load - run auth check
       authCheck(router.asPath);
 
-      // on route change start - hide page content by setting authorized to false  
+      // on route change start - hide page content by setting authorized to false
       const hideContent = () => setAuthorized(false);
       router.events.on('routeChangeStart', hideContent);
 
-      // on route change complete - run auth check 
+      // on route change complete - run auth check
       router.events.on('routeChangeComplete', authCheck)
 
       // unsubscribe from events in useEffect return function
@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   function authCheck(url) {
-      // redirect to login page if accessing a private page and not logged in 
+      // redirect to login page if accessing a private page and not logged in
       setUser(userService.userValue);
       const publicPaths = ['/account/login', '/account/register'];
       const path = url.split('?')[0];

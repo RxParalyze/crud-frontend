@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,6 +17,7 @@ import lombok.Data;
 @Data
 public class Post implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -73,6 +76,10 @@ public class Post implements Serializable {
 
     public void setExcerpt(String excerpt) {
         this.excerpt = excerpt;
+    }
+
+    public void generateExcerpt(){
+        this.excerpt = this.content.substring(0, 99) + "...";
     }
 
     public Boolean getPublished() {

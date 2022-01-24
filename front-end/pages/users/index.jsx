@@ -41,7 +41,7 @@ function Index() {
                         <tr key={user.id}>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
-                            <td>{user.username}</td>
+                            <td>{user.userName}</td>
                             <td style={{ whiteSpace: 'nowrap' }}>
                                 <Link href={`/users/edit/${user.id}`} className="btn btn-sm btn-primary mr-1">Edit</Link>
                                 <button onClick={() => deleteUser(user.id)} className="btn btn-sm btn-danger btn-delete-user" disabled={user.isDeleting}>

@@ -1,9 +1,10 @@
-import { getAllPostIds, getPostData } from '../../lib/posts'
-import { getUserData } from '../../lib/users'
-import Head from 'next/head'
-import utilStyles from '../../styles/utils.module.css'
+import { getAllPostIds, getById } from '../../services/post.service';
+import Head from 'next/head';
+import utilStyles from '../../styles/utils.module.css';
 
-export default function Post({ postData, userData }) {
+export default function Post({ postData }) {
+  const user = getUser();
+
   return (
     <td>
       <Head>
@@ -11,9 +12,9 @@ export default function Post({ postData, userData }) {
       </Head>
       <article>
         <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-        <h2 className={utilStyles.h2}>by {userData.first_name}</h2>
+        <h2 className={utilStyles.h2}>by {user.username}</h2>
         <div className={utilStyles.lightText}>
-          published {postData.created_at}
+          published {postData.createdAt}
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.content }} />
       </article>
@@ -21,19 +22,24 @@ export default function Post({ postData, userData }) {
   )
 }
 
+function getUser() {
+  const data = localStorage.getItem('user');
+  const dataJson = JSON.parse(data);
+
+  return dataJson;
+}
+
 export async function getStaticPaths() {
-  const paths = await getAllPostIds()
+  const paths = await getAllPostIds();
   return { paths, fallback: false }
 }
 
 export async function getStaticProps({params}) {
-  const postData = await getPostData(params.id)
-  const userData = await getUserData(postData.author_id)
+  const postData = await getById(params.id);
 
   return {
     props: {
-      postData,
-      userData
+      postData
     }
   }
 }
