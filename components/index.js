@@ -3,4 +3,3 @@ export * from './Link';
 export * from './Nav';
 export * from './NavLink';
 export * from './Spinner';
-export * from './home-page/featured-posts';

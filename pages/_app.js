@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import '../styles/globals.css'
 import { userService } from '../services';
 import { Nav, Alert } from '../components';
-import { FeaturedPosts } from '../components/home-page/featured-posts';
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
