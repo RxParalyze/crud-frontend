@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { Link } from '../../components';
 import { Layout } from '../../components/account';
 import { alertService } from '../../services';
-import { registerUser } from '../../helpers/api/users-repo'
+import { usersRepo } from '../../helpers/api/'
 
 export default Register;
 
@@ -32,7 +32,7 @@ function Register() {
     const { errors } = formState;
 
     function onSubmit(user) {
-        return registerUser(user)
+        return usersRepo.registerToRepo(user)
             .then(() => {
                 alertService.success('Registration successful', { keepAfterRouteChange: true });
                 router.push('login');

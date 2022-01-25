@@ -4,8 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { Link } from '../../components';
-import { alertService } from '../../services';
-import { registerUser, updateUser } from '../../helpers/api/users-repo'
+import { alertService, userService } from '../../services';
+import { usersRepo } from '../../helpers/api/'
 
 export { AddEdit };
 
@@ -45,8 +45,7 @@ function AddEdit(props) {
     }
 
     function create(data) {
-        console.log(data);
-        return registerUser(data)
+        return usersRepo.registerToRepo(data)
             .then(() => {
                 alertService.success('User added', { keepAfterRouteChange: true });
                 router.push('.');
@@ -55,7 +54,7 @@ function AddEdit(props) {
     }
 
     function update(id, data) {
-        return updateUser(id, data)
+        return usersRepo.updateRepo(id, data)
             .then(() => {
                 alertService.success('User updated', { keepAfterRouteChange: true });
                 router.push('..');

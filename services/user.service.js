@@ -5,8 +5,11 @@ import Router from 'next/router';
 import { fetchWrapper } from '../helpers';
 
 const { publicRuntimeConfig } = getConfig();
+//TODO: FIX PUBLICRUNTIMECONFIG
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
+
 const userApi = 'https://rxparalyze-crud-backend-app.herokuapp.com:443/api/users';
+//const userApi = 'http://localhost:8080/api/users';
 const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 
 export const userService = {
@@ -14,10 +17,10 @@ export const userService = {
     get userValue () { return userSubject.value },
     login,
     logout,
-    register,
+    post,
     getAll,
     getById,
-    update,
+    put,
     delete: _delete
 };
 
@@ -39,7 +42,8 @@ function logout() {
     Router.push('/account/login');
 }
 
-export async function register(user) {
+export async function post(user) {
+    console.log(user);
     return fetchWrapper.post(`${userApi}`, user);
 }
 
@@ -51,7 +55,7 @@ export async function getById(id) {
     return fetchWrapper.get(`${userApi}/${id}`);
 }
 
-export async function update(id, params) {
+export async function put(id, params) {
     return fetchWrapper.put(`${userApi}/${id}`, params)
         .then(x => {
             // update stored user if the logged in user updated their own record

@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 import getConfig from 'next/config';
 
 import { apiHandler } from '../../../helpers/api';
-import { getAll } from '../../../services/user.service';
+import { userService } from '../../../services/';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -13,7 +13,7 @@ export default apiHandler({
 
 async function authenticate(req, res) {
     const { userName, password } = req.body;
-    const users = await getAll();
+    const users = await userService.getAll();
     var user;
     for (var x = 0; x < users.length; x++) {
         console.log(users[x].userName)

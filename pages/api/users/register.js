@@ -1,7 +1,4 @@
-const bcrypt = require('bcryptjs');
-
-import { apiHandler } from '../../../helpers/api';
-import { getAll, registerUser } from '../../../services/user.service';
+import { apiHandler, usersRepo } from '../../../helpers/api';
 
 export default apiHandler({
     post: register
@@ -10,7 +7,7 @@ export default apiHandler({
 async function register(req, res) {
     // split out password from user details
     const { password, ...user } = req.body;
-    const users = await getAll();
+    const users = await usersRepo.getAllFromRepo();
     console.log(user);
 
     // validate
@@ -20,9 +17,6 @@ async function register(req, res) {
         }
     }
 
-    // hash password
-    user.hash = bcrypt.hashSync(password, 10);
-
-    registerUser(user);
+    usersRepo.registerToRepo(user);
     return res.status(200).json({});
 }

@@ -1,28 +1,35 @@
-import { getAll, getById, publish, updatePost, _delete } from '../../services/post.service';
-
-let posts = getAll();
+import { postService, userService } from '../../services/';
 
 export const postsRepo = {
-    getAll: () => posts,
-    getById: id => getById(id),
-    find: x => posts.find(x),
-    createPost,
-    editPost,
-    deletePost
+    getAllFromRepo,
+    getByIdFromRepo,
+    addPostToRepo,
+    updateRepo,
+    deleteFromRepo
 };
 
-function getUser() {
-    const data = localStorage.getItem('user');
-    const dataJson = JSON.parse(data);
+async function getUser() {
+    //const data = localStorage.getItem('user');
+    const data = userService.userValue;
+    //const dataJson = JSON.parse(data);
 
-    return dataJson;
+    return data;
 }
 
-export async function createPost(post) {
-    // generate new post id and excerpt
-    const user = getUser();
+export async function getAllFromRepo() {
+    return await postService.getAll();
+}
 
-    //post.id = await getAll().length + 1;
+export async function getByIdFromRepo(id){
+    return await postService.getById(id);
+}
+
+export async function addPostToRepo(post) {
+    console.log(post);
+    const user = await getUser();
+
+    console.log(user);
+    // generate new excerpt ang get AuthorId
     post.excerpt = post.content.substring(0,99).concat('...');
     post.authorId = user.id;
 
@@ -35,26 +42,26 @@ export async function createPost(post) {
     console.log(post);
 
     // add and save post
-    return publish(post);
+    return postService.post(post);
 }
 
-export async function editPost(id, params) {
-    const post = getById(id);
+export async function updateRepo(id, params) {
+    const post = getByIdFromRepo(id);
     Object.assign(post, params);
 
     // update and save
     post.excerpt = post.content.substring(0,99).concat('...');
     post.updatedAt = new Date().toISOString();
-    return updatePost(id, post);
+    return postService.put(id, post);
 }
 
 // prefixed with underscore '_' because 'delete' is a reserved word in javascript
-async function deletePost(id) {
+async function deleteFromRepo(id) {
     // filter out deleted post and save
-    const post = getById(id);
+    const post = getByIdFromRepo(id);
     const user = getUser();
 
     if(post.authorId == user.id) {
-        return _delete(id);
+        return postService._delete(id);
     }
 }

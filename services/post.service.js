@@ -1,25 +1,23 @@
 import { BehaviorSubject } from 'rxjs';
-import getConfig from 'next/config';
 
 import { fetchWrapper } from '../helpers';
 
-const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}/posts`;
-const postApi = 'https://rxparalyze-crud-backend-app.herokuapp.com:433/api/posts';
+const postApi = 'https://rxparalyze-crud-backend-app.herokuapp.com:443/api/posts';
+//const postApi = 'http://localhost:8080/api/posts';
 const postSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('post')));
 
 export const postService = {
     post: postSubject.asObservable(),
     get postValue () { return postSubject.value },
-    publish,
+    post,
     getAll,
-    getAllPostIds,
     getById,
-    updatePost,
+    getAllIds,
+    put,
     delete: _delete
 };
 
-export async function publish(post) {
+export async function post(post) {
     return fetchWrapper.post(`${postApi}`, post);
 }
 
@@ -27,7 +25,7 @@ export async function getAll() {
     return fetchWrapper.get(postApi);
 }
 
-export async function getAllPostIds() {
+export async function getAllIds() {
     const res = await fetchWrapper.get(postApi);
     return res.map(post => {
         return {
@@ -42,7 +40,8 @@ export async function getById(id) {
     return fetchWrapper.get(`${postApi}/${id}`);
 }
 
-export async function updatePost(id, params) {
+export async function put(id, params) {
+    console.log(params);
     return fetchWrapper.put(`${postApi}/${id}`, params)
         .then(x => {
             // update local storage

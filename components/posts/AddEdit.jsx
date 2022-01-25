@@ -6,7 +6,7 @@ import utilStyles from '../../styles/utils.module.css'
 
 import { Link } from '../../components';
 import { alertService } from '../../services';
-import { createPost, editPost } from '../../helpers/api/posts-repo'
+import { postsRepo } from '../../helpers/api/'
 
 export { AddEdit };
 
@@ -40,7 +40,7 @@ function AddEdit(props) {
     }
 
     function create(data) {
-        return createPost(data)
+        return postsRepo.addPostToRepo(data)
             .then(() => {
                 alertService.success('Post added', { keepAfterRouteChange: true });
                 router.push('.');
@@ -49,7 +49,7 @@ function AddEdit(props) {
     }
 
     function update(id, data) {
-        return editPost(id, data)
+        return postsRepo.updateRepo(id, data)
             .then(() => {
                 alertService.success('Post updated', { keepAfterRouteChange: true });
                 router.push('..');

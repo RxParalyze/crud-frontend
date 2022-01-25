@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, Spinner } from '../../components';
 import { Layout } from '../../components/posts';
 import { postService } from '../../services';
+import { postsRepo } from '../../helpers/api/';
 
 export default Index;
 
@@ -18,7 +19,7 @@ function Index() {
             if (x.id === id) { x.isDeleting = true; }
             return x;
         }));
-        postService.delete(id).then(() => {
+        postsRepo.deleteFromRepo(id).then(() => {
             setPosts(posts => posts.filter(x => x.id !== id));
         });
     }

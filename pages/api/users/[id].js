@@ -1,16 +1,16 @@
 const bcrypt = require('bcryptjs');
 
-import { omit, apiHandler } from '../../../helpers/api';
-import { getAll, updateUser, deleteUser, getById } from '../../../helpers/api/users-repo';
+import { omit, apiHandler, getAllUsersFromRepo } from '../../../helpers/api';
+import usersRepo from '../../../helpers/api/';
 
 export default apiHandler({
-    get: getUserById,
+    get: getById,
     put: update,
     delete: _delete
 });
 
-async function getUserById(req, res) {
-    const user = await getById(req.query.id);
+async function getById(req, res) {
+    const user = await usersRepo.getByIdFromRepo(req.query.id);
 
     if (!user) throw 'User Not Found';
 
@@ -18,17 +18,16 @@ async function getUserById(req, res) {
 }
 
 async function update(req, res) {
-    const user = getById(req.query.id);
+    const user = await getById(req.query.id);
 
     if (!user) throw 'User Not Found';
 
     // split out password from user details
     const { password, ...params } = req.body;
 
-    const users = await getAll();
+    const users = await usersRepo.getAllFromRepo();
 
     // validate
-
     for (var x = 0; x < users.length; x++) {
         if (user.userName !== params.userName && users[x].userName == params.userName)
             throw `User with the userName "${params.userName}" already exists`;
@@ -39,11 +38,11 @@ async function update(req, res) {
         user.hash = bcrypt.hashSync(password, 10);
     }
 
-    updateUser(req.query.id, params);
+    usersRepo.updateRepo(req.query.id, params);
     return res.status(200).json({});
 }
 
 function _delete(req, res) {
-    deleteUser(req.query.id);
+    usersRepo.deleteFromRepo(req.query.id);
     return res.status(200).json({});
 }
