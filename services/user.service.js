@@ -6,7 +6,7 @@ import { fetchWrapper } from '../helpers';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
-const userApi = 'http://localhost:8080/api/users';
+const userApi = 'https://rxparalyze-crud-backend-app.herokuapp.com/api/users';
 const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 
 export const userService = {
