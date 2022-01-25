@@ -5,7 +5,7 @@ import { fetchWrapper } from '../helpers';
 
 const { publicRuntimeConfig } = getConfig();
 const baseUrl = `${publicRuntimeConfig.apiUrl}/posts`;
-const postApi = 'https://rxparalyze-crud-backend-app.herokuapp.com/api/posts';
+const postApi = 'https://rxparalyze-crud-backend-app.herokuapp.com:433/api/posts';
 const postSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('post')));
 
 export const postService = {
