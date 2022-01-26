@@ -30,9 +30,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({params}) {
   const postData = await postService.getById(params.id);
+
+  console.log(postData);
   const userData = await userService.getById(postData.authorId);
 
-  //console.log(userData);
+  console.log(userData);
   return {
     props: {
       postData,
