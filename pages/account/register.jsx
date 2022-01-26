@@ -31,8 +31,8 @@ function Register() {
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors } = formState;
 
-    function onSubmit(user) {
-        return usersRepo.registerToRepo(user)
+    async function onSubmit(user) {
+        return await usersRepo.registerToRepo(user)
             .then(() => {
                 alertService.success('Registration successful', { keepAfterRouteChange: true });
                 router.push('login');
