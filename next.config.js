@@ -4,8 +4,11 @@ module.exports = {
     secret: 'Semper Supra'
   },
   publicRuntimeConfig: {
-      apiUrl: process.env.NODE_ENV === 'development'
+      localUrl: process.env.NODE_ENV === 'development'
           ? 'http://localhost:3000/api' // development api
-          : 'http://localhost:3000/api' // production api
-  }
+          : 'https://rxparalyze-crud-frontend-app.herokuapp.com/api', // production api
+      PORT: process.env.PORT,
+      apiUrl: process.env.API,
+  },
+
 }

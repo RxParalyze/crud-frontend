@@ -3,6 +3,8 @@ import Image from 'next/image';
 import styles from '../styles/layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 import { Link } from '../components';
+import { userService } from '../services';
+
 
 const name = 'Space Force Blog';
 
@@ -13,10 +15,9 @@ export default Home;
 
 function Home({ home }) {
 
-    const data = localStorage.getItem('user');
-    const dataJson = JSON.parse(data);
+    const data = userService.userValue;
     //console.log(dataJson);
-    const firstName = dataJson.firstName;
+    const firstName = data.firstName;
 
     return (
         <div className="p-4">

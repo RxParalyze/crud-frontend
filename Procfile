@@ -1,1 +1,1 @@
-web: npm run dev -Dserver.port=$PORT
+web: npm --optimize_for_size run start

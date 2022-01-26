@@ -6,9 +6,9 @@ import { fetchWrapper } from '../helpers';
 
 const { publicRuntimeConfig } = getConfig();
 //TODO: FIX PUBLICRUNTIMECONFIG
-const baseUrl = `${publicRuntimeConfig.apiUrl}/users`;
+const baseUrl = `${publicRuntimeConfig.localUrl}/users`;
 
-const userApi = 'https://rxparalyze-crud-backend-app.herokuapp.com:443/api/users';
+const userApi = `${publicRuntimeConfig.apiUrl}/users`;
 //const userApi = 'http://localhost:8080/api/users';
 const userSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('user')));
 

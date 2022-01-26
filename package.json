@@ -1,5 +1,7 @@
 {
   "private": true,
+  "name": "rxparalyze-crud-frontend-app",
+  "author": "RxParalyze",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

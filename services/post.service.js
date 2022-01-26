@@ -1,8 +1,10 @@
 import { BehaviorSubject } from 'rxjs';
+import getConfig from 'next/config';
 
 import { fetchWrapper } from '../helpers';
+const { publicRuntimeConfig } = getConfig();
 
-const postApi = 'https://rxparalyze-crud-backend-app.herokuapp.com:443/api/posts';
+const postApi = `${publicRuntimeConfig.apiUrl}/posts`;
 //const postApi = 'http://localhost:8080/api/posts';
 const postSubject = new BehaviorSubject(process.browser && JSON.parse(localStorage.getItem('post')));
 
