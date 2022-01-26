@@ -7,9 +7,8 @@ const path = require('path');
 const PORT = `${publicRuntimeConfig.PORT}` || 3000;
 
 var corsOptions = {
-  "origin": "*",
+  "origin": "https://rxparalyze-crud-frontend-app.herokuapp.com",
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
   "optionsSuccessStatus": 204
 }
 
